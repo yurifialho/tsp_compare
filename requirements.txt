@@ -1,0 +1,3 @@
+numpy
+python-tsp
+ACO-Pants
