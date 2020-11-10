@@ -1,40 +1,37 @@
-#https://pypi.org/project/ACO-Pants/
-import numpy as np
-import pants
-import math
-import random
+import acopy
+import networkx as nx
+class AntColonySolver:
 
-from matriz import ExampleMatrix
+    def __init__(self, graph, numExecution=30, debug=False):
+        self.bestSolutions = []
+        self.bestDistances = []
+        self.executionTimes = []
+        self.originalGraph = graph
+        self.initiate(graph)
+        self.numExecution = numExecution
+        self.debug = debug
 
-e = ExampleMatrix()
-
-distances = e.getMatrix()
-nodes = []
-for i in range(len(distances)):
-    d = [distances[i][j] for j in range(len(distances[i]))]
-    nodes.append((i, d))
-
-def distance(a, b):
-    return a[1][b[0]]
-
-world = pants.World(nodes, distance)
-solver = pants.Solver()
-#solution = solver.solve(world)
-solutions = solver.solutions(world)
-
-#print(solution.distance)
-# Nodes visited in order
-#for i in solution.tour:
-#    print(i[0], end=",")
-
-#print(solution.path)    # Edges taken in order
-#1 28 6 12 9 26 3 29 5 21 2 20 10 4 15 18 14 17 22 11 19 25 7 23 8 27 16 13 24
-
-best = float("inf")
-for solution in solutions:
-  assert solution.distance < best
-  best = solution.distance
-  tour = solution.tour
-print(best)
-for i in solution.tour:
-    print(i[0], end=",")
+    def initiate(self, matrix):
+        nodes = []
+        for i in range(len(matrix)):
+            for j in range(len(matrix[i])):
+                if i != j and matrix[i][j] != []:
+                    nodes.append((i, j, {'weight': matrix[i][j]}))
+        self.nodes = nx.Graph(nodes)
+        
+    def run(self):
+        for i in range(self.numExecution):
+            solver = acopy.Solver(rho=.03, q=1)
+            time = acopy.plugins.Timer()
+            solver.add_plugin(time)
+            colony = acopy.Colony(alpha=1, beta=3)
+            tour = solver.solve(self.nodes, colony, limit=100)
+            self.bestSolutions.append(tour.nodes)
+            self.bestDistances.append(tour.cost)
+            self.executionTimes.append(time.duration)
+            if self.debug:
+                print(f"[{i}] Execution Time: {time.duration}; Distance: {tour.cost}; ", end=" ")
+                print(tour.nodes)
+    
+    def getSolutions(self):
+        return self.bestSolutions, self.bestDistances, self.executionTimes

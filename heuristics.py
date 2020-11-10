@@ -5,4 +5,5 @@ from matriz import ExampleMatrix
 
 e = ExampleMatrix()
 permutation, distance = solve_tsp_local_search(np.array(e.getMatrix()))
+print(distance)
 print(permutation)

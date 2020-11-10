@@ -1,9 +1,18 @@
-# Resultado: 1 28 6 12 9 26 3 29 5 21 2 20 10 4 15 18 14 17 22 11 19 25 7 23 8 27 16 13 24
+# Optimal Result: 1 28 6 12 9 26 3 29 5 21 2 20 10 4 15 18 14 17 22 11 19 25 7 23 8 27 16 13 24
 
 class ExampleMatrix:
 
     def __init__(self):
         self.matrix = None
+        '''
+        self.tri_matrix = [
+            [ 13, 10, 5, 76 ],
+            [ 23, 34, 5 ],
+            [ 43, 2 ],
+            [ 23 ],
+            []
+        ]
+        '''
         self.tri_matrix = [
             [  97, 205, 139,  86,  60, 220,  65, 111, 115, 227,  95,  82, 225, 168, 103, 266, 205, 149, 120,  58, 257, 152,  52, 180, 136,  82,  34, 145 ],
             [ 129, 103,  71, 105, 258, 154, 112,  65, 204, 150,  87, 176, 137, 142, 204, 148, 148,  49,  41, 211, 226, 116, 197,  89, 153, 124,  74 ],
@@ -35,11 +44,14 @@ class ExampleMatrix:
             [ 162 ],
             []
         ]
-
+        
     def setTriangularMatrix(self, tri_matrix):
         if(tri_matrix != None):
             self.tri_matrix = tri_matrix
     
+    def getTriangularMatrix(self):
+        return self.tri_matrix
+
     def setMatrix(self, matrix):
         self.matrix = matrix
     

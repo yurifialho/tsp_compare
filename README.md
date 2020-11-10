@@ -13,4 +13,4 @@ We recomend to use venv to segregade your environment.
 2.2) The file exact.py solve the problem with dynamic program;
 2.3) The file ant_colony solve the problem with heuristc;
 
-run: python exect.py or python ant_conoly.py
+run: python main.py it will execute both algorithms exact.py and ant_colony.py
