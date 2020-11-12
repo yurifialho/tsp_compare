@@ -56,13 +56,6 @@ model.optimize()
 if model.num_solutions:
     out.write('route with total distance %g found: %s'
               % (model.objective_value, places[0]))
-    nc = 0
-    while True:
-        nc = [i for i in V if x[nc][i].x >= 0.99][0]
-        out.write(' -> %s' % places[nc])
-        if nc == 0:
-            break
-    out.write('\n')
 
 # sanity tests
 from mip import OptimizationStatus
